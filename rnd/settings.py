@@ -8,28 +8,37 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
+
+Quick-start development settings - unsuitable for production
+See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 """
-
+import os
 from pathlib import Path
+from environs import Env
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# example:
+# env.bool(
+#     # set casting, default value
+#     DEBUG=(bool, False)
+# )
+env = Env()
+env.read_env()
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*7_nt$lpuv*lwwznmq)lu#@=rhtue4dd16tmk=r0c1(!(zjkjn'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+# GENERAL
+# ====================================================================================================
+DEBUG = env.bool('DEBUG')
+SECRET_KEY = env('SECRET_KEY')
+ALLOWED_HOSTS = ['*']
+TIME_ZONE = 'UTC'
+LANGUAGE_CODE = 'en-us'
 
 
 # APPS
 # ====================================================================================================
+
 DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -52,6 +61,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS + AUTH_APPS
 
 # MIDDLEWARE
 # ====================================================================================================
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -63,6 +73,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'rnd.urls'
+
+# TEMPLATES
+# ====================================================================================================
 
 TEMPLATES = [
     {
@@ -83,22 +96,20 @@ TEMPLATES = [
 WSGI_APPLICATION = 'rnd.wsgi.application'
 
 
-# Database
+# DATABASE
+# ====================================================================================================
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'rnd',
-        'USER': 'hatter',
-        'PASSWORD': 'idGAfljDUHk3240l4j',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
+    'default': env.dj_db_url("DATABASE_URL")
 }
 
 
 
-# Password validation
+
+# PASSWORD VALIDATION
+# ====================================================================================================
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -117,24 +128,22 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
+# I18N
+# ====================================================================================================
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+# STATIC
+# ====================================================================================================
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = 'static/'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
