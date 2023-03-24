@@ -16,20 +16,17 @@ import os
 from pathlib import Path
 from environs import Env
 
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-# example:
-# env.bool(
-#     # set casting, default value
-#     DEBUG=(bool, False)
-# )
 env = Env()
 env.read_env()
 
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+
 # GENERAL
 # ====================================================================================================
-DEBUG = env.bool('DEBUG')
+# DEBUG = env.bool('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
 ALLOWED_HOSTS = ['*']
 TIME_ZONE = 'UTC'
@@ -100,12 +97,16 @@ WSGI_APPLICATION = 'rnd.wsgi.application'
 # ====================================================================================================
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-
 DATABASES = {
-    'default': env.dj_db_url("DATABASE_URL")
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env("DB_NAME"),
+        'USER': env("DB_USER"),
+        'PASSWORD': env("DB_PASSWORD"),
+        'HOST': env("DB_HOST"),
+        'PORT': env("DB_PORT"),
+    }
 }
-
-
 
 
 # PASSWORD VALIDATION
