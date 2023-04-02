@@ -11,7 +11,8 @@ class Article(models.Model):
 
     def __str__(self):
         """String representing Model object"""
-        return f"{self.title} {self.author} {self.created_at}"
+        # f"{self.title} {self.author} {self.created_at}"
+        return self.title
 
 
     class Meta:
