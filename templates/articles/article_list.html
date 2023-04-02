@@ -1,0 +1,16 @@
+
+<h1>
+    <center>
+        Welcome To RND!
+    </center>
+    
+</h1>
+<hr>
+
+{% for article in article_list %}
+    <div>
+        <h2>{{ article.title  }}</h2>
+        <p>Written By: {{ article.author }} at {{ article.created_at }}</p>
+        <p>{{ article.description }}</p>
+    </div>
+{% endfor %}
