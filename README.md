@@ -1,5 +1,5 @@
 # RND.sh
-This is the repository for the site (Research and Development)[https://www.rnd.sh/];
+This is the repository for the site [Research and Development](https://www.rnd.sh/);
 
 ---
 
